@@ -66,7 +66,8 @@ public class CategoriaController {
         return repository.findById(id).map(cat->{
         cat.setClasseCategoria(cat.getClasseCategoria());
         cat.setModProdCategoria(cat.getModProdCategoria());
-        cat.setFrescorCategoria(cat.getFrescorCategoria());        return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
+        cat.setFrescorCategoria(cat.getFrescorCategoria());        
+        return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
         }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
