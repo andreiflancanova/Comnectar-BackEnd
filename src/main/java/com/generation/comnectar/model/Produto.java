@@ -35,7 +35,6 @@ public class Produto {
 	@Digits(integer = 8, fraction = 2)
 	private BigDecimal precoProduto;
 	
-	@NotNull
 	private String unidadeProduto;
 	
 	@Positive
