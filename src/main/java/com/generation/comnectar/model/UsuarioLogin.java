@@ -1,13 +1,17 @@
 package com.generation.comnectar.model;
 
+import javax.validation.constraints.NotBlank;
+
 public class UsuarioLogin {
 
 	private Long id;
 	
 	private String nomeUsuario;
 	
+	@NotBlank
 	private String loginUsuario;
 	
+	@NotBlank
 	private String senhaUsuario;
 
 	private String localUsuario;

@@ -77,7 +77,7 @@ public class Categoria {
 		this.modProdCategoria = modprodCategoria;
 	}
 
-	public boolean isFrescorCategoria() {
+	public boolean getFrescorCategoria() {
 		return frescorCategoria;
 	}
 

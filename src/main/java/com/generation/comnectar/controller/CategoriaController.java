@@ -60,9 +60,14 @@ public class CategoriaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
 	
-	@PutMapping
-	public ResponseEntity<Categoria> atualizaCategoria(@Valid @RequestBody Categoria categoria){
-		return ResponseEntity.ok(repository.save(categoria));
+	@PutMapping("/{id}")
+	public ResponseEntity<Categoria> atualizaCategoria(@Valid @RequestBody Categoria categoria, @PathVariable Long id ){
+		return repository.findById(id).map(cat->{
+			cat.setClasseCategoria(cat.getClasseCategoria());
+			cat.setModProdCategoria(cat.getModProdCategoria());
+			cat.setFrescorCategoria(cat.getFrescorCategoria());
+			return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
+		}).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@DeleteMapping ("/{id}")
