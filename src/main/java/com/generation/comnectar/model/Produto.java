@@ -38,15 +38,12 @@ public class Produto {
 	@NotNull
 	private String unidadeProduto;
 	
-	@NotNull
 	@Positive
 	@Digits(integer = 7, fraction = 3)
 	private BigDecimal estoqueProduto;
 	
-	@NotNull
 	private String chegadaProduto;
 	
-	@NotNull
 	private String shelfProduto;
 	
 	@ManyToOne
