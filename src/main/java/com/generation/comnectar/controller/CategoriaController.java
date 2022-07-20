@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.comnectar.model.Categoria;
+import com.generation.comnectar.model.Produto;
 import com.generation.comnectar.repository.CategoriaRepository;
 
 @RestController
@@ -61,13 +62,12 @@ public class CategoriaController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> atualizaCategoria(@Valid @RequestBody Categoria categoria, @PathVariable Long id ){
-		return repository.findById(id).map(cat->{
-			cat.setClasseCategoria(cat.getClasseCategoria());
-			cat.setModProdCategoria(cat.getModProdCategoria());
-			cat.setFrescorCategoria(cat.getFrescorCategoria());
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
-		}).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    public ResponseEntity<Categoria> atualizaCategoria (@RequestBody Categoria categoria, @PathVariable Long id ){
+        return repository.findById(id).map(cat->{
+        cat.setClasseCategoria(cat.getClasseCategoria());
+        cat.setModProdCategoria(cat.getModProdCategoria());
+        cat.setFrescorCategoria(cat.getFrescorCategoria());        return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
+        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
 	@DeleteMapping ("/{id}")
