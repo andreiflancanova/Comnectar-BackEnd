@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.comnectar.model.Categoria;
-import com.generation.comnectar.model.Produto;
 import com.generation.comnectar.repository.CategoriaRepository;
 
 @RestController
@@ -38,7 +37,7 @@ public class CategoriaController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> buscaCategoriaId(@PathVariable Long id) {
 		return repository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
-				.orElse(ResponseEntity.notFound().build());
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
 	@GetMapping("/classe/{classeCategoria}")
@@ -55,25 +54,21 @@ public class CategoriaController {
 	public ResponseEntity<List<Categoria>> buscaCategoriaFrescor(@PathVariable boolean frescorCategoria) {
 		return ResponseEntity.ok(repository.findByFrescorCategoria(frescorCategoria));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Categoria> adicionaCategoria(@Valid @RequestBody Categoria categoria){
+	public ResponseEntity<Categoria> adicionaCategoria(@Valid @RequestBody Categoria categoria) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
-	
-	@PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizaCategoria (@RequestBody Categoria categoria, @PathVariable Long id ){
-        return repository.findById(id).map(cat->{
-        cat.setClasseCategoria(cat.getClasseCategoria());
-        cat.setModProdCategoria(cat.getModProdCategoria());
-        cat.setFrescorCategoria(cat.getFrescorCategoria());        
-        return ResponseEntity.status(HttpStatus.OK).body(repository.save(cat));
-        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+	@PutMapping
+	public ResponseEntity<Categoria> atualizaCategoria(@Valid @RequestBody Categoria categoria) {
+		return repository.findById(categoria.getId()).map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria)))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
-	
-	@DeleteMapping ("/{id}")
+
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		repository.deleteById(id);
 	}
-	
+
 }
